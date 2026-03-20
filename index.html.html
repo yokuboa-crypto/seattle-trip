@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEA × YVR — 2026.05</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+TC:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #f7f4ef;
+  --bg2: #f0ebe3;
+  --ink: #1c1a17;
+  --ink2: #4a4540;
+  --ink3: #8a8078;
+  --line: rgba(28,26,23,0.12);
+  --accent: #c45c38;
+  --accent2: #2a5c8a;
+  --gold: #b8963e;
+  --green: #4a7c5e;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ─── COVER ─── */
+.cover {
+  height: 100svh; min-height: 600px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(160deg, rgba(28,26,23,0.0) 30%, rgba(196,92,56,0.18) 100%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.015) 2px,
+      rgba(255,255,255,0.015) 4px
+    );
+}
+
+.cover-grid {
+  position: absolute; inset: 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  pointer-events: none;
+}
+.cover-grid-col {
+  border-right: 1px solid rgba(255,255,255,0.04);
+}
+
+.cover-content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 7vw 6vh;
+  gap: 0;
+}
+
+.cover-overline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(11px, 1.2vw, 14px);
+  letter-spacing: 5px;
+  color: var(--accent);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: up .8s .2s forwards;
+}
+
+.cover-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(72px, 14vw, 180px);
+  line-height: 0.88;
+  color: #f7f4ef;
+  letter-spacing: -1px;
+  opacity: 0;
+  animation: up .9s .35s forwards;
+}
+.cover-title em {
+  font-style: normal;
+  color: var(--accent);
+  display: block;
+}
+
+.cover-sub {
+  margin-top: 28px;
+  display: flex; align-items: center; gap: 20px;
+  opacity: 0;
+  animation: up .8s .55s forwards;
+}
+.cover-sub span {
+  font-size: 12px; letter-spacing: 2px;
+  color: rgba(247,244,239,0.45);
+  text-transform: uppercase;
+}
+.cover-sub-line { flex: 1; max-width: 80px; height: 1px; background: rgba(247,244,239,0.2); }
+
+.cover-bottom {
+  position: relative; z-index: 2;
+  border-top: 1px solid rgba(247,244,239,0.1);
+  padding: 20px 7vw;
+  display: flex; justify-content: space-between; align-items: center;
+  opacity: 0;
+  animation: up .7s .7s forwards;
+}
+.cover-stats { display: flex; gap: 40px; }
+.cover-stat .n {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px; font-weight: 300;
+  color: #f7f4ef; line-height: 1;
+}
+.cover-stat .l { font-size: 10px; letter-spacing: 2px; color: rgba(247,244,239,0.35); margin-top: 4px; text-transform: uppercase; }
+.cover-scroll {
+  font-size: 10px; letter-spacing: 3px;
+  color: rgba(247,244,239,0.3); text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+.cover-scroll::after {
+  content: '';
+  display: block; width: 40px; height: 1px;
+  background: rgba(247,244,239,0.3);
+  animation: scrollline 2s ease-in-out infinite alternate;
+}
+@keyframes scrollline { to { width: 16px; opacity: 0.2; } }
+@keyframes up { from { opacity:0; transform:translateY(24px) } to { opacity:1; transform:translateY(0) } }
+
+/* ─── STICKY NAV ─── */
+.sitenav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(247,244,239,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.sitenav-inner {
+  display: flex; align-items: center;
+  padding: 0 7vw;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sitenav-inner::-webkit-scrollbar { display: none; }
+.sitenav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 2px;
+  color: var(--ink);
+  margin-right: 32px; padding: 16px 0;
+  white-space: nowrap; flex-shrink: 0;
+}
+.sitenav-logo span { color: var(--accent); }
+.nav-link {
+  padding: 18px 16px;
+  font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink3);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+  flex-shrink: 0;
+}
+.nav-link:hover, .nav-link.on { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* ─── SECTION SHELLS ─── */
+.section { padding: 100px 7vw; }
+.section + .section { border-top: 1px solid var(--line); }
+.section.dark { background: var(--ink); color: var(--bg); }
+
+.section-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px; letter-spacing: 4px;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 5.5vw, 68px);
+  font-weight: 300; line-height: 1.05;
+  color: inherit;
+}
+.section-title em { font-style: italic; color: var(--accent); }
+.section-intro {
+  max-width: 520px;
+  font-size: 14px; color: var(--ink3);
+  margin-top: 16px; line-height: 1.8;
+}
+.dark .section-intro { color: rgba(247,244,239,0.45); }
+
+/* ─── DAYS GRID ─── */
+.days-list { margin-top: 64px; }
+
+.day-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  opacity: 0; transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.day-row.vis { opacity: 1; transform: none; }
+.day-row:last-child { border-bottom: 1px solid var(--line); }
+
+.day-index {
+  padding: 36px 24px 36px 0;
+  display: flex; flex-direction: column;
+  align-items: flex-start;
+  border-right: 1px solid var(--line);
+}
+.day-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px; font-weight: 300;
+  line-height: 1; color: var(--ink);
+  letter-spacing: -2px;
+}
+.day-mth {
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink3); margin-top: 2px;
+}
+.day-wd {
+  font-size: 10px; letter-spacing: 1px;
+  color: var(--accent); font-weight: 500;
+  margin-top: 8px;
+}
+.day-city-badge {
+  margin-top: auto; padding-top: 16px;
+  font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink3);
+  display: flex; align-items: center; gap: 4px;
+}
+.city-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent2);
+  flex-shrink: 0;
+}
+.city-dot.ca { background: var(--green); }
+
+.day-body { padding: 36px 40px 36px 40px; }
+
+.day-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 400; line-height: 1.2;
+  margin-bottom: 24px;
+  color: var(--ink);
+}
+
+.events { display: flex; flex-direction: column; gap: 0; }
+
+/* 3-column: [time 60px] [spine 24px] [content 1fr] */
+.event {
+  display: grid;
+  grid-template-columns: 60px 24px 1fr;
+  gap: 0;
+}
+.event + .event { padding-top: 14px; }
+
+.event-time {
+  font-size: 11px; font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  padding-top: 3px;
+  text-align: right;
+  padding-right: 10px;
+  line-height: 1.4;
+}
+.event-time.plain { color: var(--ink3); }
+
+/* dot + vertical line in column 2 */
+.event-spine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4px;
+}
+.event-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--bg);
+  border: 1.5px solid var(--ink3);
+  flex-shrink: 0;
+}
+.event-dot.fill { background: var(--accent); border-color: var(--accent); }
+.event-spine-line {
+  flex: 1; width: 1px;
+  background: var(--line);
+  margin-top: 5px; min-height: 20px;
+}
+.event:last-child .event-spine-line { display: none; }
+
+.event-content { padding-left: 10px; padding-bottom: 4px; }
+.event-name {
+  font-size: 14px; font-weight: 500;
+  color: var(--ink); line-height: 1.3;
+  margin-bottom: 3px;
+}
+.event-desc { font-size: 12.5px; color: var(--ink3); line-height: 1.65; }
+
+.event-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+.etag {
+  font-size: 10px; letter-spacing: 0.5px;
+  padding: 3px 9px; border-radius: 2px;
+  font-weight: 400;
+}
+.etag-food { background: #fdeee6; color: var(--accent); }
+.etag-shop { background: #e6eff8; color: var(--accent2); }
+.etag-move { background: #e8efe8; color: var(--green); }
+.etag-stay { background: #f2ede5; color: var(--ink3); }
+.etag-tip  { background: #fdf5e5; color: var(--gold); }
+
+.tip-inline {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #fdf5e5;
+  border-left: 2px solid var(--gold);
+  font-size: 12px; color: #6b5a1e;
+  line-height: 1.6;
+  border-radius: 0 4px 4px 0;
+}
+.suggest-inline {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #e8f0e8;
+  border-left: 2px solid var(--green);
+  font-size: 12px; color: #2a4a30;
+  line-height: 1.6;
+  border-radius: 0 4px 4px 0;
+}
+
+/* ─── CHAPTER DIVIDER ─── */
+.chapter {
+  padding: 48px 7vw;
+  background: var(--ink);
+  display: flex; align-items: baseline; gap: 24px;
+  overflow: hidden;
+}
+.chapter-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 10vw, 120px);
+  line-height: 1; color: rgba(247,244,239,0.06);
+  flex-shrink: 0;
+}
+.chapter-text {}
+.chapter-label {
+  font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 6px;
+}
+.chapter-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300; color: #f7f4ef;
+  line-height: 1.1;
+}
+
+/* ─── SHOPPING ─── */
+.shop-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  margin-top: 56px;
+  border: 1px solid var(--line);
+}
+.shop-intro-grid .si-cell {
+  background: var(--bg);
+  padding: 36px 32px;
+}
+.si-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300;
+  color: var(--accent); line-height: 1;
+  margin-bottom: 8px;
+}
+.si-title { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+.si-sub { font-size: 12.5px; color: var(--ink3); line-height: 1.6; }
+
+.brand-table { margin-top: 56px; }
+.brand-table-header {
+  display: grid; grid-template-columns: 180px 1fr 140px 180px;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--ink);
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--ink3); font-weight: 500;
+}
+.brand-row {
+  display: grid; grid-template-columns: 180px 1fr 140px 180px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+  gap: 16px;
+  transition: background .15s;
+}
+.brand-row:hover { background: rgba(196,92,56,0.03); margin: 0 -24px; padding: 18px 24px; }
+.brand-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+.brand-cat {
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--accent); margin-top: 2px;
+}
+.brand-desc { font-size: 12.5px; color: var(--ink3); line-height: 1.6; }
+.brand-where { font-size: 12px; color: var(--accent2); line-height: 1.5; }
+.brand-save {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 600; color: var(--green);
+}
+.brand-save-note { font-size: 11px; color: var(--ink3); margin-top: 2px; }
+
+/* ─── SOUVENIR ─── */
+.souvenir-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  margin-top: 56px;
+  border: 1px solid var(--line);
+}
+.sv-card {
+  background: var(--bg);
+  padding: 28px 24px;
+  transition: background .2s;
+}
+.sv-card:hover { background: var(--bg2); }
+.sv-icon { font-size: 36px; margin-bottom: 14px; display: block; }
+.sv-name { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+.sv-where {
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 8px;
+}
+.sv-desc { font-size: 12px; color: var(--ink3); line-height: 1.6; }
+
+/* ─── PHARMACY ─── */
+.rx-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 56px;
+}
+.rx-card {
+  padding: 32px 28px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.rx-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.rx-card.usa::before { background: var(--accent2); }
+.rx-card.can::before { background: var(--green); }
+.rx-card.org::before { background: var(--gold); }
+.rx-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px; font-weight: 300;
+  color: rgba(28,26,23,0.06);
+  line-height: 1;
+  position: absolute; top: 16px; right: 20px;
+}
+.rx-flag { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink3); margin-bottom: 10px; }
+.rx-name { font-size: 20px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+.rx-type { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+.rx-desc { font-size: 12.5px; color: var(--ink3); line-height: 1.7; margin-bottom: 16px; }
+.rx-list { list-style: none; }
+.rx-list li {
+  font-size: 12.5px; color: var(--ink);
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+  display: flex; gap: 8px; align-items: baseline;
+}
+.rx-list li::before {
+  content: '—';
+  color: var(--ink3); flex-shrink: 0; font-size: 11px;
+}
+
+/* ─── TIPS SECTION ─── */
+.tips-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 56px;
+}
+.tip-card-new {
+  background: var(--bg);
+  padding: 32px 28px;
+  transition: background .15s;
+}
+.tip-card-new:hover { background: var(--bg2); }
+.tc-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+.tc-title { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
+.tc-text { font-size: 12.5px; color: var(--ink3); line-height: 1.7; }
+
+/* ─── FOOTER ─── */
+.site-footer {
+  background: var(--ink);
+  padding: 64px 7vw 48px;
+}
+.footer-top {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(247,244,239,0.1);
+  gap: 24px; flex-wrap: wrap;
+}
+.footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px; line-height: 1;
+  color: rgba(247,244,239,0.15);
+  letter-spacing: 2px;
+}
+.footer-meta { font-size: 12px; color: rgba(247,244,239,0.3); line-height: 1.8; text-align: right; }
+.footer-bottom { padding-top: 32px; font-size: 12px; color: rgba(247,244,239,0.2); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .brand-table-header, .brand-row { grid-template-columns: 1fr 1fr; }
+  .brand-table-header .bh-where, .brand-table-header .bh-save,
+  .brand-row .brand-where, .brand-row .brand-save { display: none; }
+  .shop-intro-grid { grid-template-columns: 1fr; }
+  .day-row { grid-template-columns: 72px 1fr; }
+  .day-num { font-size: 38px; }
+  .day-body { padding: 24px 20px; }
+  .event { grid-template-columns: 52px 22px 1fr; }
+}
+@media (max-width: 480px) {
+  .section { padding: 64px 5vw; }
+  .sitenav-inner { padding: 0 5vw; }
+  .cover-content { padding: 0 5vw 5vh; }
+  .cover-bottom { padding: 16px 5vw; }
+  .cover-stats { gap: 24px; }
+  .chapter { padding: 32px 5vw; }
+  .brand-table-header, .brand-row { grid-template-columns: 1fr; gap: 8px; }
+  .brand-table-header { display: none; }
+  .day-row { grid-template-columns: 60px 1fr; }
+  .day-body { padding: 20px 16px; }
+  .event { grid-template-columns: 46px 20px 1fr; }
+  .event-time { font-size: 10px; padding-right: 6px; }
+}
+
+
+/* ─── DAY SUMMARY BAR ─── */
+.day-summary {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: var(--bg2);
+  border-radius: 4px;
+  font-size: 11px;
+}
+.ds-item {
+  display: flex; align-items: center; gap: 5px;
+  color: var(--ink3);
+  white-space: nowrap;
+}
+.ds-item strong { color: var(--ink); font-weight: 500; }
+.ds-sep { color: var(--line); margin: 0 2px; }
+
+/* ─── TRANSIT BAR ─── */
+.transit-bar {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 8px;
+  padding: 9px 12px;
+  background: #edf2f8;
+  border-left: 2px solid var(--accent2);
+  border-radius: 0 4px 4px 0;
+  font-size: 12px; color: var(--accent2);
+  line-height: 1.55;
+}
+.transit-bar .t-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+.transit-bar .t-detail { color: var(--ink3); }
+.transit-bar .t-detail strong { color: var(--ink); }
+
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER ═══ -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-grid">
+    <div class="cover-grid-col"></div><div class="cover-grid-col"></div>
+    <div class="cover-grid-col"></div><div class="cover-grid-col"></div>
+    <div class="cover-grid-col"></div><div class="cover-grid-col"></div>
+    <div class="cover-grid-col"></div><div class="cover-grid-col"></div>
+    <div class="cover-grid-col"></div><div class="cover-grid-col"></div>
+    <div class="cover-grid-col"></div><div class="cover-grid-col"></div>
+  </div>
+  <div class="cover-content">
+    <div class="cover-overline">Family Trip · 2026 May · 親子旅行</div>
+    <div class="cover-title">
+      SEA<em>×</em>YVR
+    </div>
+    <div class="cover-sub">
+      <span>Seattle</span>
+      <div class="cover-sub-line"></div>
+      <span>Victoria</span>
+      <div class="cover-sub-line"></div>
+      <span>Vancouver</span>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-stats">
+      <div class="cover-stat"><div class="n">13</div><div class="l">Days</div></div>
+      <div class="cover-stat"><div class="n">3</div><div class="l">Cities</div></div>
+      <div class="cover-stat"><div class="n">4/30</div><div class="l">Depart</div></div>
+    </div>
+    <div class="cover-scroll">Scroll</div>
+  </div>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav class="sitenav">
+  <div class="sitenav-inner">
+    <div class="sitenav-logo">SEA<span>×</span>YVR</div>
+    <a class="nav-link" href="#itinerary">行程</a>
+    <a class="nav-link" href="#shopping">購物</a>
+    <a class="nav-link" href="#souvenir">伴手禮</a>
+    <a class="nav-link" href="#pharmacy">藥妝保養</a>
+    <a class="nav-link" href="#tips">旅行提醒</a>
+  </div>
+</nav>
+
+<!-- ═══ CHAPTER 1 ═══ -->
+<div class="chapter">
+  <div class="chapter-num">01</div>
+  <div class="chapter-text">
+    <div class="chapter-label">Itinerary · 行程規劃</div>
+    <div class="chapter-title">每日行程<br><em style="font-style:italic;color:rgba(247,244,239,0.35)">Day by Day</em></div>
+  </div>
+</div>
+
+<!-- ═══ ITINERARY ═══ -->
+<section class="section" id="itinerary" style="padding-top:72px;">
+  <div class="days-list">
+
+    <!-- 4/30 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">30</div>
+        <div class="day-mth">Apr</div>
+        <div class="day-wd">Thu · 四</div>
+        <div class="day-city-badge"><div class="city-dot"></div>Seattle</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">深夜抵達西雅圖<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">First Night in the Emerald City</em></div>
+        <div class="day-summary"><div class="ds-item">🚇 <strong>輕軌</strong> SEA-TAC → 市中心</div><div class="ds-sep">·</div><div class="ds-item">⏱ 預計抵達飯店 <strong>約 21:30</strong></div><div class="ds-sep">·</div><div class="ds-item">🏨 Kimpton Hotel Monaco</div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time">23:30</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">班機起飛 → 西雅圖 SEA-TAC 機場降落</div>
+              <div class="event-desc">在台灣出發，預計抵達西雅圖時約晚間 19:30（當地時間）。</div>
+              <div class="event-tags"><span class="etag etag-move">✈ 飛行</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">入境後</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Link Light Rail 輕軌 → Symphony 站</div>
+              <div class="transit-bar"><span class="t-icon">🚇</span><div class="t-detail"><strong>Link Light Rail</strong> · SEA-TAC Airport 站 → Symphony 站 · 約 <strong>40 分鐘</strong> · 單程 $3.25 · 24 小時運行</div></div>
+              <div class="event-desc">比計程車省錢又不塞車，拖著行李直接上車，月台就在 1 樓航廈。</div>
+              <div class="event-tags"><span class="etag etag-move">🚇 輕軌</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">深夜</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">入住 Kimpton Hotel Monaco Seattle</div>
+              <div class="event-desc">市中心精品酒店，走路到派克市場只要 10 分鐘，地點絕佳。今晚早點休息，明天開始精彩行程！</div>
+              <div class="event-tags"><span class="etag etag-stay">🏨 住宿</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/1 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">01</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Fri · 五</div>
+        <div class="day-city-badge"><div class="city-dot"></div>Seattle</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">派克市場的早晨<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">Pike Place & The Waterfront</em></div>
+        <div class="day-summary"><div class="ds-item">🚶 <strong>全程步行</strong> 可達</div><div class="ds-sep">·</div><div class="ds-item">📍 飯店為中心半徑 1km 內</div><div class="ds-sep">·</div><div class="ds-item">⏱ 預估移動時間 <strong>30 分鐘以內</strong></div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time">09:30</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">飯店早餐</div>
+              <div class="event-desc">先吃飽，今天要走很多路！</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">10:00</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Pike Place Market — 魚販拋魚秀</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>飯店步行</strong> 約 10 分鐘 · Kimpton → Pike Place Market</div></div>
+              <div class="event-desc">每天約 10 點開始，魚販喊著號子把整條大魚高空拋接，安攸一定看得目瞪口呆！市場裡還有蜂蜜、果醬、鮮花攤，空氣裡飄著海鮮和咖啡香。</div>
+              <div class="event-tags"><span class="etag etag-food">🐟 體驗</span><span class="etag etag-shop">🎁 伴手禮採買</span></div>
+              <div class="tip-inline">💡 <strong>Made in Washington</strong> 商店就在市場內，煙燻鮭魚禮盒、西北楓糖漿在這買最齊全。</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">午餐</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">派克市場內熟食 或 Ivar's Fish Bar</div>
+              <div class="event-desc">市場內直接買熟食最方便；或走到旁邊的 Ivar's，平價炸魚薯條是西雅圖在地經典，配上皮吉特灣的海風，超享受。</div>
+              <div class="event-tags"><span class="etag etag-food">🍟 午餐</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">安攸午睡</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Nordstrom Rack — 掃包包衣服</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>飯店步行</strong> 約 5 分鐘 · 步行即達，安攸午睡衝刺最佳時機</div></div>
+              <div class="event-desc">飯店步行 5 分鐘，安攸睡覺正是衝去掃貨的最佳時機！Coach、Kate Spade、Ted Baker 全在這，折扣 3–7 折。</div>
+              <div class="event-tags"><span class="etag etag-shop">🛍 購物</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">下午</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Seattle Waterfront 海濱步道</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> 約 5 分鐘 · 市場沿坡道往下走即達海濱</div></div>
+              <div class="event-desc">沿著海濱散步，有兒童遊樂區、星巴克原始店（排隊人多可外帶），對著皮吉特灣吹風，天氣好能遠眺奧林匹克山脈。</div>
+              <div class="event-tags"><span class="etag etag-move">🌊 戶外</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/2 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">02</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Sat · 六</div>
+        <div class="day-city-badge"><div class="city-dot"></div>Seattle</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">哈利波特圖書館與大學城<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">UW Campus & University Village</em></div>
+        <div class="day-summary"><div class="ds-item">🚇 <strong>輕軌</strong> Symphony → U District <strong>24 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚶 <strong>步行</strong> 校園 → U Village <strong>15 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚌 <strong>公車 62</strong> Gas Works → Downtown <strong>40 分</strong></div><div class="ds-sep">·</div><div class="ds-item">⏱ 交通合計約 <strong>1.5 小時</strong></div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time">09:30</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">飯店早餐</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">10:30</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">華盛頓大學 — Suzzallo Library「哈利波特圖書館」</div>
+              <div class="transit-bar"><span class="t-icon">🚇</span><div class="t-detail"><strong>Link Light Rail</strong> · Symphony 站 → U District 站 · 約 <strong>24 分鐘</strong> · $2.75</div></div>
+              <div class="event-desc">哥德式穹頂閱覽室美得像電影場景，即使不是學生也能進去參觀。旁邊的 Red Square 廣場、藥草園散步推車走完全沒問題。Union Bay 湖邊有鴨子，安攸必喜歡！</div>
+              <div class="event-tags"><span class="etag etag-move">🏛 景點</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">午餐</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Whole Foods Market</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> 約 5 分鐘 · U District 校園附近即有</div></div>
+              <div class="event-desc">大學附近就有，熟食沙拉吧選擇超豐富，帶安攸坐下來好好吃一頓，同時可以順手買幾樣有機保養品。</div>
+              <div class="event-tags"><span class="etag etag-food">🥗 午餐</span><span class="etag etag-shop">💊 藥妝</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">下午</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">University Village — lululemon · The North Face · Patagonia · REI</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> 約 15 分鐘 · 從 UW 校園穿過 University Bridge 往東北方向</div></div>
+              <div class="event-desc">從校園散步過去約 15 分鐘，這裡的運動品牌比台灣便宜 20–40%，是買運動服最好的時機！lululemon 的 Align 瑜珈褲、Scuba 帽 T 都是必看。</div>
+              <div class="event-tags"><span class="etag etag-shop">🛍 購物重點</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">傍晚</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Gas Works Park 煤氣廠公園 · 買晚餐</div>
+              <div class="transit-bar"><span class="t-icon">🚌</span><div class="t-detail"><strong>公車 62 號</strong> Gas Works Park → Downtown · 約 <strong>40 分鐘</strong> · $2.75 | 步行至公園約 25 分鐘（或叫 Uber）</div></div>
+              <div class="event-desc">廢棄煤氣廠改建的公園，站在山丘上遠眺西雅圖市區天際線，是當地人最愛的景色之一。搭公車回飯店約 40 分鐘，路上順便買晚餐。</div>
+              <div class="event-tags"><span class="etag etag-move">🌆 景點</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/3 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">03</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Sun · 日</div>
+        <div class="day-city-badge"><div class="city-dot"></div>SEA → YVR</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">Outlet 掃貨，驅車北上<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">Outlets → Vancouver</em></div>
+        <div class="day-summary"><div class="ds-item">🚗 <strong>自駕</strong> 西雅圖 → Outlet <strong>50 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚗 Outlet → 溫哥華 <strong>1.5–2 小時</strong></div><div class="ds-sep">·</div><div class="ds-item">🛂 過境 <strong>30–60 分</strong>（週日建議預留）</div><div class="ds-sep">·</div><div class="ds-item">⏱ 全程約 <strong>3–3.5 小時</strong></div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time">10:30</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">租車 · 出發！</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>自駕</strong> · Kimpton → Seattle Premium Outlets (Tulalip) 約 <strong>50 分鐘</strong> · I-5 N</div></div>
+              <div class="event-desc">今天開始自駕，車程總計約 3 小時（含 Outlet 停留）。記得確認租車公司允許跨國入加拿大，護照備好。</div>
+              <div class="event-tags"><span class="etag etag-move">🚗 自駕</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">11:30</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Seattle Premium Outlets（Tulalip）</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>自駕</strong> · Outlets → 溫哥華市區 約 <strong>1.5–2 小時</strong>（含過境 30–60 分鐘）</div></div>
+              <div class="event-desc">在溫哥華方向的路上，順道停靠！Coach Outlet、Kate Spade、Michael Kors、Nike、Adidas、GAP 全在這，折扣幅度 40–70%。讓安攸在這裡吃飯休息，爸媽輪流掃貨。</div>
+              <div class="event-tags"><span class="etag etag-shop">🛍 必逛 Outlet</span></div>
+              <div class="tip-inline">💡 Coach Tabby、Willow 系列在 Outlet 約 $100–160，台灣同款 NT$12,000+，省超多！</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">15:00</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">抵達溫哥華 · 住宿附近公園</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> 散步至 Stong's Market（住宿附近）</div></div>
+              <div class="event-desc">入住後帶安攸去附近公園放電，爸媽順便喘口氣。</div>
+              <div class="suggest-inline">📌 建議：邊境可能排隊 30–60 分鐘（週日尤甚），時間預留寬鬆一點，勿趕。</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">晚間</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">散步去 Stong's Market</div>
+              <div class="event-desc">溫哥華知名有機超市，採買晚餐食材、加拿大楓糖漿和本地零食，一邊逛一邊感受溫哥華的生活感。</div>
+              <div class="event-tags"><span class="etag etag-food">🛒 超市</span><span class="etag etag-shop">🍁 伴手禮</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/4 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">04</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Mon · 一</div>
+        <div class="day-city-badge"><div class="city-dot ca"></div>Vancouver</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">千尺高空走吊橋<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">Capilano · Lonsdale · Stanley Park</em></div>
+        <div class="day-summary"><div class="ds-item">🚗 <strong>自駕</strong> 住宿 → Capilano <strong>30 分</strong></div><div class="ds-sep">·</div><div class="ds-item">⛴ <strong>SeaBus</strong> Waterfront → Lonsdale <strong>12 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚗 Lonsdale → Stanley Park <strong>20 分</strong></div><div class="ds-sep">·</div><div class="ds-item">⏱ 交通合計約 <strong>1 小時</strong></div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time">09:00</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">卡皮拉諾吊橋公園 Capilano Suspension Bridge</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>自駕</strong> · 溫哥華市區 → Capilano 約 <strong>30 分鐘</strong> · 免費停車場</div></div>
+              <div class="event-desc">早上 9 點開門，建議一早就到！樹梢探險 Treetops Adventure 走在高空木棧道上俯瞰雨林，雨林探險家計畫有解說，大吊橋壯觀震撼。安攸這個年紀已經能感受到刺激感了！</div>
+              <div class="event-tags"><span class="etag etag-move">🌲 親子</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">12:00</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Lonsdale Quay Market — 逛街吃中餐</div>
+              <div class="transit-bar"><span class="t-icon">⛴</span><div class="t-detail"><strong>SeaBus</strong> 可從 Waterfront 站搭渡輪（$3.75 CAD，12 分鐘）到 Lonsdale Quay，安攸超愛坐船！或 <strong>自駕</strong> 約 <strong>10 分鐘</strong></div></div>
+              <div class="event-desc">北岸碼頭市場，俯瞰溫哥華市區天際線，有各式熟食攤位，海鮮、亞洲料理都有，小孩最愛的市場逛街體驗！</div>
+              <div class="event-tags"><span class="etag etag-food">🍽 午餐</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">14:00</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">史丹利公園 Stanley Park — 散步看海豹</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>自駕</strong> · Lonsdale Quay → Stanley Park 約 <strong>20 分鐘</strong> · 可停 West Georgia St 停車場</div></div>
+              <div class="event-desc">溫哥華最美的城市公園，Second Beach 有沙灘遊樂場，可以找找海獅礁（Siwash Rock 附近），也可以租自行車沿著海堤騎一圈，推車也走得了短程路線。</div>
+              <div class="event-tags"><span class="etag etag-move">🌊 戶外</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">晚餐</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">附近超市買食材自煮</div>
+              <div class="event-desc">今天活動量大，自煮輕鬆又舒適。</div>
+              <div class="event-tags"><span class="etag etag-food">🍳 自煮</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/5 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">05</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Tue · 二</div>
+        <div class="day-city-badge"><div class="city-dot ca"></div>Victoria</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">渡海去維多利亞<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">Victoria Day Trip · BC Ferries</em></div>
+        <div class="day-summary"><div class="ds-item">🚗 <strong>自駕</strong> 溫哥華 → 碼頭 <strong>40 分</strong></div><div class="ds-sep">·</div><div class="ds-item">⛴ <strong>BC Ferries</strong> 渡輪 <strong>1 小時 35 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚗 島上景點間 <strong>20–25 分</strong></div><div class="ds-sep">·</div><div class="ds-item">⏱ 往返交通合計約 <strong>5 小時</strong></div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time">07:20</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">出發前往 Tsawwassen 渡輪碼頭</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>自駕</strong> · 溫哥華市區 → Tsawwassen Ferry Terminal 約 <strong>40 分鐘</strong> · 車位需提前預訂</div></div>
+              <div class="event-desc">車位要在開船前 30–60 分鐘到達，不能遲到！車程約 40 分鐘。</div>
+              <div class="event-tags"><span class="etag etag-move">🚗 車程40分</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">09:00</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">搭乘 BC Ferries — 航行約 1.5 小時</div>
+              <div class="transit-bar"><span class="t-icon">⛴</span><div class="t-detail"><strong>BC Ferries</strong> · Tsawwassen → Swartz Bay · 航程 <strong>1 小時 35 分</strong></div></div>
+              <div class="event-desc">可以上甲板吹海風、看海鷗追船，船上有兒童遊戲室，安攸不無聊！預約 9 點船班，提前在官網訂車位。</div>
+              <div class="event-tags"><span class="etag etag-move">⛴ 渡輪</span></div>
+              <div class="tip-inline">🔗 bcferries.com — 車位務必提前訂，週末非常搶手。</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">10:45</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">布查氏花園 Butchart Gardens</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>自駕</strong> · Swartz Bay 碼頭 → Butchart Gardens 約 <strong>20 分鐘</strong></div></div>
+              <div class="event-desc">五月花期正盛，玫瑰旋轉木馬（Rose Carousel）安攸必搶著要坐，Ross Fountain 噴水秀會變換水柱造型，下沉花園走一圈色彩繽紛。</div>
+              <div class="event-tags"><span class="etag etag-move">🌸 必訪</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">下午</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Fisherman's Wharf → Beacon Hill Park</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>自駕</strong> · Butchart Gardens → Fisherman's Wharf 約 <strong>25 分鐘</strong> · 步行至 Beacon Hill Park 約 10 分鐘</div></div>
+              <div class="event-desc">漁人碼頭彩色水上屋超好拍，有炸魚薯條和冰淇淋小攤。Beacon Hill Park 有免費兒童農場，可以摸羊、看孔雀，安攸這個年紀最愛！</div>
+              <div class="event-tags"><span class="etag etag-move">🦚 親子</span></div>
+              <div class="suggest-inline">📌 Hatley Castle 交通較不便，加上今天行程已充實，可考慮略過，保留體力搭船回程。</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">16:00</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">預約 16:00 或 17:00 回程船班</div>
+              <div class="transit-bar"><span class="t-icon">⛴</span><div class="t-detail"><strong>BC Ferries 回程</strong> · Swartz Bay → Tsawwassen 約 <strong>1 小時 35 分</strong> → 自駕回溫哥華約 40 分鐘</div></div>
+              <div class="event-desc">同樣提前訂車位，準時前往碼頭。夕陽時分渡海，風景超美。</div>
+              <div class="event-tags"><span class="etag etag-move">⛴ 返程</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/6 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">06</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Wed · 三</div>
+        <div class="day-city-badge"><div class="city-dot ca"></div>Vancouver</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">蒸汽鐘 · 加拿大品牌 · 科學世界<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">Gastown · Robson St · Science World</em></div>
+        <div class="day-summary"><div class="ds-item">🚇 <strong>SkyTrain</strong> 住宿 → Waterfront <strong>15–30 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚶 <strong>步行</strong> Gastown → Canada Place → Robson St</div><div class="ds-sep">·</div><div class="ds-item">🚇 Robson St → Science World <strong>10 分</strong></div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time">09:00</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Gastown 蒸汽鐘</div>
+              <div class="transit-bar"><span class="t-icon">🚇</span><div class="t-detail"><strong>SkyTrain Expo Line</strong> · 住宿附近站 → Waterfront 站 · 約 <strong>15–30 分鐘</strong>（依住宿位置）· $3.15 CAD</div></div>
+              <div class="event-desc">每 15 分鐘鳴汽一次，是溫哥華最具代表性的地標之一。早上人少，可以悠哉拍照，旁邊有很多特色咖啡廳適合當早餐。</div>
+              <div class="event-tags"><span class="etag etag-move">⏰ 景點</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">09:30</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Canada Place 閒晃</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> 約 5 分鐘 · Gastown 蒸汽鐘走路即達 Canada Place</div></div>
+              <div class="event-desc">溫哥華港灣旁的白帆造型建築，可以看到大型郵輪停靠，帶安攸看船，吹吹海風。</div>
+              <div class="event-tags"><span class="etag etag-move">🚢 景點</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">上午</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Robson St — Roots · Aritzia · Canada Goose</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> 約 10 分鐘 · Canada Place → Robson St（或搭 SkyTrain 一站）</div></div>
+              <div class="event-desc"><strong>Roots</strong> 加拿大國民品牌，海狸 LOGO 兒童服飾超可愛；<strong>Aritzia</strong> 台灣完全買不到的加拿大女裝；<strong>Canada Goose</strong> 在溫哥華買比台灣便宜約 30%，Robson St 旗艦店款式最齊全。</div>
+              <div class="event-tags"><span class="etag etag-shop">🍁 加拿大品牌</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time">14:00</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Science World 科學世界</div>
+              <div class="transit-bar"><span class="t-icon">🚇</span><div class="t-detail"><strong>SkyTrain Expo Line</strong> · Main St–Science World 站 · 從 Waterfront 約 <strong>10 分鐘</strong></div></div>
+              <div class="event-desc">圓頂玻璃球建築，溫哥華地標之一。互動式科學展覽對小孩非常友善，有專為幼兒設計的體驗區，安攸可以玩好幾個小時。</div>
+              <div class="event-tags"><span class="etag etag-move">🔬 親子</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/7 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">07</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Thu · 四</div>
+        <div class="day-city-badge"><div class="city-dot ca"></div>Vancouver</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">格蘭佛島的市集時光<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">Granville Island · Kitsilano Beach</em></div>
+        <div class="day-summary"><div class="ds-item">🚗 <strong>自駕</strong> 住宿 → Granville Island <strong>15 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚗 Granville → Kitsilano Beach <strong>10 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚗 Kitsilano → Robson St Aritzia <strong>15 分</strong></div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time plain">上午</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Granville Island — Kids Market 兒童市集</div>
+              <div class="transit-bar"><span class="t-icon">⛴</span><div class="t-detail"><strong>Aquabus 小渡船</strong> · Hornby St Dock → Granville Island 約 <strong>5 分鐘</strong>，$5.50 CAD | 或 <strong>自駕</strong> 約 15 分鐘</div></div>
+              <div class="event-desc">室內滑梯、各式玩具店、創意工坊，安攸的天堂！家長也可以逛陶藝、手工藝工作室，整個島都充滿創意氣息。</div>
+              <div class="event-tags"><span class="etag etag-move">🎠 親子</span></div>
+              <div class="event-desc" style="margin-top:4px">🚗 開車約 15 分鐘，也可搭小渡船 Aquabus。</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">午餐</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Public Market 採買午餐 &amp; 晚餐食材</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> · Kids Market 至 Public Market 步行 3 分鐘，同在 Granville Island 上</div></div>
+              <div class="event-desc">市場內熟食攤位非常豐富，壽司、越南河粉、烤雞、新鮮烘焙全在這，直接在市場吃午餐，晚餐食材也一起採買帶回。</div>
+              <div class="event-tags"><span class="etag etag-food">🥘 市集美食</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">下午</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">基斯蘭奴海灘 Kitsilano Beach</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>自駕</strong> · Granville Island → Kitsilano Beach 約 <strong>10 分鐘</strong></div></div>
+              <div class="event-desc">溫哥華最美的海灘之一，北岸山脈作為背景，沙灘細柔，可以踏水玩沙，天晴的話連蓋帽子都不願意。</div>
+              <div class="event-tags"><span class="etag etag-move">🏖 海灘</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">傍晚</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">逛 Aritzia</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>自駕</strong> · Kitsilano Beach → Robson St Aritzia 約 <strong>15 分鐘</strong></div></div>
+              <div class="event-desc">今天最後一個機會逛 Aritzia，Wilfred 知性款、TNA 休閒款，帶一件回台灣跟別人不一樣。</div>
+              <div class="event-tags"><span class="etag etag-shop">🍁 加拿大品牌</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/8 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">08</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Fri · 五</div>
+        <div class="day-city-badge"><div class="city-dot"></div>YVR → SEA</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">鬱金香花田，回西雅圖<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">Skagit Valley · Back to Seattle</em></div>
+        <div class="day-summary"><div class="ds-item">🚗 <strong>自駕</strong> 溫哥華 → Skagit Valley <strong>1.5 小時</strong></div><div class="ds-sep">·</div><div class="ds-item">🛂 過境 <strong>30–60 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚗 Skagit → 西雅圖 <strong>1 小時</strong></div><div class="ds-sep">·</div><div class="ds-item">⏱ 全程約 <strong>3–4 小時</strong></div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time">11:00</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">溫哥華退房，開車南下</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>自駕</strong> · 溫哥華 → Skagit Valley 約 <strong>1.5 小時</strong> | 全程溫哥華 → 西雅圖約 <strong>2.5–3 小時</strong>（含過境）</div></div>
+              <div class="event-desc">今天正式離開溫哥華，驅車回西雅圖。</div>
+              <div class="event-tags"><span class="etag etag-move">🚗 自駕</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">途中</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Skagit Valley 鬱金香花田</div>
+              <div class="transit-bar"><span class="t-icon">🚗</span><div class="t-detail"><strong>Skagit Valley → 西雅圖市區</strong> 約 <strong>1 小時</strong> · I-5 S</div></div>
+              <div class="event-desc">5 月上旬仍有晚開品種，一望無際的紅黃花海，帶安攸在花田裡拍照，是這趟旅行最浪漫的一段路。</div>
+              <div class="event-tags"><span class="etag etag-move">🌷 賞花</span></div>
+              <div class="suggest-inline">📌 建議出發前查 tulipfestival.org 確認花況，5 月 8 日約在尾聲，若已謝可提早進西雅圖採買。</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">傍晚</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">入住 Crowne Plaza Seattle-Downtown by IHG</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行範圍</strong> · Crowne Plaza 周邊有 Walgreens、Target，步行 5–10 分鐘可達</div></div>
+              <div class="event-desc">回到西雅圖市中心，放下行李後可步行去 Target 或 Walgreens 先補買幾樣藥妝，為明天的集中採購做個預習。</div>
+              <div class="event-tags"><span class="etag etag-stay">🏨 住宿</span><span class="etag etag-shop">💊 藥妝預購</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/9 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">09</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Sat · 六</div>
+        <div class="day-city-badge"><div class="city-dot"></div>Seattle</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">Amazon 熱帶雨林 · Seattle Center<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">The Spheres · Children's Museum</em></div>
+        <div class="day-summary"><div class="ds-item">🚶 <strong>步行</strong> Crowne Plaza → Amazon Spheres <strong>20 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚌 <strong>公車 3/4</strong> Downtown → Seattle Center <strong>15 分</strong></div><div class="ds-sep">·</div><div class="ds-item">🚶 Seattle Center → Lake Union Park <strong>20 分</strong></div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time plain">上午</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Amazon Spheres 參觀（限定預約）</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> · Crowne Plaza → Amazon Spheres 步行約 <strong>20 分鐘</strong>，或搭 Link Light Rail 一站</div></div>
+              <div class="event-desc">玻璃球形溫室內是真實的熱帶雨林，奇特植物多到令人瞠目，安攸可以在室內探索叢林！<strong>每月第 1、3 個週六免費開放</strong>，需提前 15 天在官網預約。</div>
+              <div class="event-tags"><span class="etag etag-move">🌿 必訪</span></div>
+              <div class="tip-inline">🔗 seattlespheres.com — 提前預約，別錯過！週六沒有 Banana Stand，不用期待。</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">午間</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Seattle Children's Museum · 美食廣場午餐</div>
+              <div class="transit-bar"><span class="t-icon">🚌</span><div class="t-detail"><strong>公車 3 或 4 號</strong> · Downtown → Seattle Center 約 <strong>15 分鐘</strong>，或步行約 25 分鐘</div></div>
+              <div class="event-desc">安攸可以玩 2–3 小時的互動式兒童博物館，農場區、建築區、角色扮演區一應俱全。博物館附近美食廣場解決午餐。</div>
+              <div class="event-tags"><span class="etag etag-move">🎨 親子</span><span class="etag etag-food">🍱 午餐</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">下午</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">International Fountain 噴水池 → Lake Union Park</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> · Seattle Center 內步行即達 International Fountain · Lake Union Park 再步行 <strong>20 分鐘</strong>往東北</div></div>
+              <div class="event-desc">噴水池隨音樂節奏噴水，安攸肯定想跑進去！走 20 分鐘到 Lake Union Park，可以看到水上飛機起降，超酷。Museum of Pop Culture 和太空針塔在附近，可在外拍照，票價不便宜可考慮略過。</div>
+              <div class="event-tags"><span class="etag etag-move">🚀 景點</span></div>
+              <div class="suggest-inline">📌 Amazon Spheres + 兒童博物館 + Lake Union Park 已非常充實，太空針塔登頂可視狀況決定。</div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">晚餐</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">超市 Deli 外帶</div>
+              <div class="event-tags"><span class="etag etag-food">🥡 外帶</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/10 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">10</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Sun · 日</div>
+        <div class="day-city-badge"><div class="city-dot"></div>Seattle</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">動物園漫遊日<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">Woodland Park Zoo · All Day</em></div>
+        <div class="day-summary"><div class="ds-item">🚌 <strong>公車 5 號</strong> Downtown → 動物園 <strong>35 分</strong> · $2.75</div><div class="ds-sep">·</div><div class="ds-item">🚌 回程同路線</div><div class="ds-sep">·</div><div class="ds-item">⏱ 往返交通約 <strong>1 小時 10 分</strong></div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time plain">全天</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Woodland Park Zoo 伍德蘭公園動物園</div>
+              <div class="transit-bar"><span class="t-icon">🚌</span><div class="t-detail"><strong>公車 5 號</strong> · Crowne Plaza 附近 3rd Ave → N 50th St &amp; Fremont Ave N · 約 <strong>35 分鐘</strong> · $2.75 | 回程搭同方向公車回 Downtown</div></div>
+              <div class="event-desc">西雅圖最棒的動物園，非洲大草原區、企鵝館、熊、長頸鹿，動物種類超豐富，安攸一定捨不得走。建議早上 9:30 開門即入場，避開正中午人潮高峰。</div>
+              <div class="event-tags"><span class="etag etag-move">🦁 親子必訪</span></div>
+              <div class="suggest-inline">📌 下午若安攸午睡，可附近找 Target 或 CVS 補買幾樣藥妝，為明天最後採購做準備。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/11 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">11</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Mon · 一</div>
+        <div class="day-city-badge"><div class="city-dot"></div>Seattle</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">最後一天：藥妝 · 伴手禮大採購<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">Final Shopping Day</em></div>
+        <div class="day-summary"><div class="ds-item">🚶 <strong>全程步行</strong> 可達主要購物點</div><div class="ds-sep">·</div><div class="ds-item">🚌 <strong>公車或 Uber</strong> → Trader Joe's <strong>10 分</strong></div><div class="ds-sep">·</div><div class="ds-item">✈ 班機 <strong>01:10</strong>，建議 <strong>23:00 前搭車</strong>去機場</div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time plain">上午</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Walgreens / CVS — 藥妝保養品集中採購</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> · Crowne Plaza 周邊步行 5 分鐘內即有 Walgreens & CVS</div></div>
+              <div class="event-desc">CeraVe 全系列、La Roche-Posay 防曬、Neutrogena 精華，全都比台灣便宜 30–50%。保健食品：魚油、維生素 D3、膠原蛋白粉一次買齊。</div>
+              <div class="event-tags"><span class="etag etag-shop">💊 藥妝</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">午間</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">Trader Joe's — 零食伴手禮大掃貨</div>
+              <div class="transit-bar"><span class="t-icon">🚌</span><div class="t-detail"><strong>公車或 Uber</strong> · 最近 Trader Joe's 在 Capitol Hill（約 <strong>10 分鐘</strong>）或 Westlake 附近</div></div>
+              <div class="event-desc">Cookie Butter 餅乾醬、Chili Lime 玉米捲餅乾、有機果乾、TJ 自家咖啡，全是台灣買不到的！建議每樣多買幾份，朋友同事都會愛。</div>
+              <div class="event-tags"><span class="etag etag-shop">🎁 伴手禮</span></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-time plain">下午</div>
+            <div class="event-spine"><div class="event-dot"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">派克市場補買煙燻鮭魚 · 整理行李</div>
+              <div class="transit-bar"><span class="t-icon">🚶</span><div class="t-detail"><strong>步行</strong> · Crowne Plaza → Pike Place Market 步行約 <strong>10 分鐘</strong></div></div>
+              <div class="event-desc">煙燻鮭魚買真空包裝可托運，See's Candies 巧克力補貨。整理行李，預先秤重，明早凌晨 1:10 班機，晚間 22:00 前要完成機場 check-in。</div>
+              <div class="event-tags"><span class="etag etag-food">🐟 伴手禮</span></div>
+              <div class="tip-inline">⚖️ 出發前先量行李重量！回程行李一定爆，建議帶一個可折疊的購物袋備用。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5/12 -->
+    <div class="day-row" data-reveal>
+      <div class="day-index">
+        <div class="day-num">12</div>
+        <div class="day-mth">May</div>
+        <div class="day-wd">Tue · 二</div>
+        <div class="day-city-badge"><div class="city-dot"></div>Fly Home</div>
+      </div>
+      <div class="day-body">
+        <div class="day-headline">帶著滿滿的回憶回家<br><em style="font-style:italic;font-size:0.75em;color:var(--ink3)">Homeward Bound</em></div>
+        <div class="day-summary"><div class="ds-item">🚇 <strong>Link Light Rail</strong> Westlake → SEA-TAC <strong>40 分</strong></div><div class="ds-sep">·</div><div class="ds-item">⏰ 建議 <strong>23:00 前</strong> 出門搭車</div><div class="ds-sep">·</div><div class="ds-item">✈ 班機 <strong>01:10</strong> 起飛</div></div>
+        <div class="events">
+          <div class="event">
+            <div class="event-time">01:10</div>
+            <div class="event-spine"><div class="event-dot fill"></div><div class="event-spine-line"></div></div>
+            <div class="event-content">
+              <div class="event-name">班機起飛 → 抵達台灣 05:10</div>
+              <div class="transit-bar"><span class="t-icon">🚇</span><div class="t-detail"><strong>Link Light Rail</strong> · Westlake 站 → SEA-TAC 機場 約 <strong>40 分鐘</strong> · 深夜仍有班次約每 20 分鐘一班 · $3.25 | 建議 <strong>23:00 前</strong> 出發搭車</div></div>
+              <div class="event-desc">13 天的旅程畫下句點。安攸睡在飛機上，爸媽回頭看這趟精彩行程，一定很值得。</div>
+              <div class="event-tags"><span class="etag etag-move">✈ 返台</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ CHAPTER 2 ═══ -->
+<div class="chapter">
+  <div class="chapter-num">02</div>
+  <div class="chapter-text">
+    <div class="chapter-label">Shopping · 購物指南</div>
+    <div class="chapter-title">值得買的品牌<br><em style="font-style:italic;color:rgba(247,244,239,0.35)">Better Price in USA</em></div>
+  </div>
+</div>
+
+<!-- ═══ SHOPPING ═══ -->
+<section class="section" id="shopping" style="padding-top:72px;">
+
+  <div class="shop-intro-grid">
+    <div class="si-cell">
+      <div class="si-num">40%</div>
+      <div class="si-title">包包最高省幅</div>
+      <div class="si-sub">Coach、Kate Spade、Michael Kors 在 Seattle Premium Outlets 折扣驚人，比台灣省下數千台幣。</div>
+    </div>
+    <div class="si-cell">
+      <div class="si-num">30%</div>
+      <div class="si-title">運動品牌省幅</div>
+      <div class="si-sub">lululemon、The North Face、Patagonia 在 University Village 購入，每件省 NT$1,000–3,000。</div>
+    </div>
+    <div class="si-cell">
+      <div class="si-num">台灣<br>沒有</div>
+      <div class="si-title">加拿大限定品牌</div>
+      <div class="si-sub">Aritzia 女裝、Roots Canada 在台灣沒有實體店，溫哥華是唯一機會。</div>
+    </div>
+    <div class="si-cell">
+      <div class="si-num">50%</div>
+      <div class="si-title">藥妝保養省幅</div>
+      <div class="si-sub">CeraVe、La Roche-Posay、Drunk Elephant 美國售價比台灣便宜 30–50%，最後一天集中採購。</div>
+    </div>
+  </div>
+
+  <div class="brand-table">
+    <div class="brand-table-header">
+      <span>品牌</span>
+      <span>說明</span>
+      <span class="bh-where">購買地點</span>
+      <span class="bh-save">建議省幅</span>
+    </div>
+
+    <div class="brand-row">
+      <div><div class="brand-name">Coach Outlet</div><div class="brand-cat">包包 · Leather Goods</div></div>
+      <div class="brand-desc">Tabby、Willow、Pillow Tabby 熱門款，台灣 NT$12,000+，Outlet 約 $100–160。皮革質感好，送禮自用兩相宜。</div>
+      <div class="brand-where">Seattle Premium<br>Outlets</div>
+      <div><div class="brand-save">省 40–60%</div><div class="brand-save-note">約省 NT$4,000–7,000</div></div>
+    </div>
+
+    <div class="brand-row">
+      <div><div class="brand-name">Kate Spade</div><div class="brand-cat">包包 · Accessories</div></div>
+      <div class="brand-desc">甜美設計感，Outlet 折扣常在 6 折以下，蝴蝶結、花朵款台灣同款貴很多，適合買來當自用或禮物。</div>
+      <div class="brand-where">Seattle Premium<br>Outlets / Nordstrom Rack</div>
+      <div><div class="brand-save">省 35–50%</div><div class="brand-save-note">約省 NT$3,000–5,000</div></div>
+    </div>
+
+    <div class="brand-row">
+      <div><div class="brand-name">lululemon</div><div class="brand-cat">運動服飾 · Activewear</div></div>
+      <div class="brand-desc">Align 瑜珈褲 $98、Scuba 帽 T $118，台灣同款貴 30–40%。University Village 有實體店，尺碼最齊全。</div>
+      <div class="brand-where">University Village<br>Robson St, Vancouver</div>
+      <div><div class="brand-save">省 30–40%</div><div class="brand-save-note">每件省 NT$1,500–3,000</div></div>
+    </div>
+
+    <div class="brand-row">
+      <div><div class="brand-name">The North Face /<br>Patagonia</div><div class="brand-cat">戶外機能 · Outdoor</div></div>
+      <div class="brand-desc">University Village 兩家都有，衝鋒衣、抓絨外套比台灣便宜 20–30%。REI 旁邊也有，偶有特賣。</div>
+      <div class="brand-where">University Village<br>REI</div>
+      <div><div class="brand-save">省 20–30%</div><div class="brand-save-note">每件省 NT$1,500–4,000</div></div>
+    </div>
+
+    <div class="brand-row">
+      <div><div class="brand-name">Nike / Adidas</div><div class="brand-cat">運動品牌 · Sportswear</div></div>
+      <div class="brand-desc">Outlet 折扣區常有 4–5 折商品，童裝區特別划算！買給安攸幾套都值得。</div>
+      <div class="brand-where">Seattle Premium<br>Outlets</div>
+      <div><div class="brand-save">省 30–50%</div><div class="brand-save-note">童裝尤其超值</div></div>
+    </div>
+
+    <div class="brand-row">
+      <div><div class="brand-name">Aritzia</div><div class="brand-cat">加拿大女裝 · 台灣買不到</div></div>
+      <div class="brand-desc">溫哥華最受歡迎的女裝品牌，Wilfred 系列優雅知性，TNA 休閒舒適，質感媲美輕奢但價格實在。台灣完全沒有。</div>
+      <div class="brand-where">Robson St<br>Granville 附近</div>
+      <div><div class="brand-save">台灣零售無</div><div class="brand-save-note">必買加拿大限定</div></div>
+    </div>
+
+    <div class="brand-row">
+      <div><div class="brand-name">Canada Goose</div><div class="brand-cat">羽絨外套 · Premium</div></div>
+      <div class="brand-desc">溫哥華 Robson St 旗艦店款式最齊全，比台灣便宜約 30%，非常適合這趟順便入手。</div>
+      <div class="brand-where">Robson St<br>Vancouver</div>
+      <div><div class="brand-save">省 25–30%</div><div class="brand-save-note">省 NT$6,000–15,000</div></div>
+    </div>
+
+    <div class="brand-row">
+      <div><div class="brand-name">Nordstrom Rack</div><div class="brand-cat">綜合 · 倉庫特賣</div></div>
+      <div class="brand-desc">Nordstrom 的折扣倉庫，Cole Haan、Ted Baker、Theory、Sam Edelman 全在這，包包、衣服、鞋子 3–7 折。就在 Kimpton 飯店旁步行 5 分鐘！</div>
+      <div class="brand-where">西雅圖市中心<br>步行可達</div>
+      <div><div class="brand-save">省 30–70%</div><div class="brand-save-note">安攸午睡時衝去</div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ CHAPTER 3 ═══ -->
+<div class="chapter">
+  <div class="chapter-num">03</div>
+  <div class="chapter-text">
+    <div class="chapter-label">Souvenirs · 伴手禮</div>
+    <div class="chapter-title">帶回台灣<br><em style="font-style:italic;color:rgba(247,244,239,0.35)">Best Gifts to Bring Home</em></div>
+  </div>
+</div>
+
+<!-- ═══ SOUVENIR ═══ -->
+<section class="section" id="souvenir" style="padding-top:72px;">
+  <p style="font-size:14px;color:var(--ink3);margin-bottom:0;max-width:480px;line-height:1.8;">選在 5/11 採購日集中掃貨效率最高，派克市場和 Trader Joe's 是兩大必去基地。</p>
+
+  <div class="souvenir-cols">
+    <div class="sv-card">
+      <span class="sv-icon">🐟</span>
+      <div class="sv-name">煙燻鮭魚禮盒</div>
+      <div class="sv-where">Pike Place Market</div>
+      <div class="sv-desc">西雅圖最具代表性的伴手禮。買真空包裝可放行李箱托運，原味、胡椒、檸檬三種口味，約 $20–35/盒。</div>
+    </div>
+    <div class="sv-card">
+      <span class="sv-icon">🥐</span>
+      <div class="sv-name">Piroshky Piroshky 俄式麵包</div>
+      <div class="sv-where">Pike Place Market</div>
+      <div class="sv-desc">市場內排隊名店，酥脆外皮包餡，蘋果肉桂、起司薯泥最受歡迎，現買現吃，帶安攸一起排隊！</div>
+    </div>
+    <div class="sv-card">
+      <span class="sv-icon">🍫</span>
+      <div class="sv-name">See's Candies 巧克力</div>
+      <div class="sv-where">西雅圖市中心門市</div>
+      <div class="sv-desc">美國西岸百年巧克力品牌，混合禮盒裝最送禮，牛奶巧克力、海鹽太妃糖都是人氣款，$20–30/盒。</div>
+    </div>
+    <div class="sv-card">
+      <span class="sv-icon">🫙</span>
+      <div class="sv-name">Cookie Butter 餅乾醬</div>
+      <div class="sv-where">Trader Joe's</div>
+      <div class="sv-desc">TJ 最火爆的獨家商品！比利時焦糖餅乾研磨成抹醬，塗吐司或直接挖來吃，台灣買不到，$4 一罐建議買 5 罐以上。</div>
+    </div>
+    <div class="sv-card">
+      <span class="sv-icon">🌶️</span>
+      <div class="sv-name">Chili Lime Tortilla Chips</div>
+      <div class="sv-where">Trader Joe's</div>
+      <div class="sv-desc">TJ 獨家酸辣玉米捲餅乾，一打開就停不下來，$2.99 一包，同事每人買一包最省心。</div>
+    </div>
+    <div class="sv-card">
+      <span class="sv-icon">🍁</span>
+      <div class="sv-name">加拿大楓糖漿</div>
+      <div class="sv-where">溫哥華超市 / Costco</div>
+      <div class="sv-desc">100% 純楓糖漿分 Amber 和 Dark 等級，Costco 買大桶最划算，CAD $15–25。Stong's Market 也有在地品牌。</div>
+    </div>
+    <div class="sv-card">
+      <span class="sv-icon">☕</span>
+      <div class="sv-name">Trader Joe's 咖啡 / 茶包</div>
+      <div class="sv-where">Trader Joe's</div>
+      <div class="sv-desc">自家品牌咖啡豆品質不輸精品咖啡，Cold Brew 咖啡包特別受歡迎，帶一袋回家每天享用。</div>
+    </div>
+    <div class="sv-card">
+      <span class="sv-icon">🦫</span>
+      <div class="sv-name">Roots 兒童服飾</div>
+      <div class="sv-where">Robson St, Vancouver</div>
+      <div class="sv-desc">加拿大國民品牌，海狸 LOGO 超萌，買幾件給安攸和親友小孩，台灣網路代購貴很多，現場買最划算。</div>
+    </div>
+    <div class="sv-card">
+      <span class="sv-icon">🫐</span>
+      <div class="sv-name">有機藍莓乾 / 蔓越莓乾</div>
+      <div class="sv-where">Trader Joe's / Whole Foods</div>
+      <div class="sv-desc">美國有機水果乾大包裝品質好，蔓越莓、芒果乾、藍莓乾都好吃，自用送人兩相宜，比台灣便宜一半。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHAPTER 4 ═══ -->
+<div class="chapter">
+  <div class="chapter-num">04</div>
+  <div class="chapter-text">
+    <div class="chapter-label">Beauty & Health · 藥妝保養</div>
+    <div class="chapter-title">哪裡買保養品<br><em style="font-style:italic;color:rgba(247,244,239,0.35)">Drugstores & Beauty</em></div>
+  </div>
+</div>
+
+<!-- ═══ PHARMACY ═══ -->
+<section class="section" id="pharmacy" style="padding-top:72px;">
+  <p style="font-size:14px;color:var(--ink3);margin-bottom:0;max-width:500px;line-height:1.8;">美國藥妝品質好、售價比台灣便宜 30–50%，<strong style="color:var(--ink)">5/11 採購日</strong>集中一次買齊最有效率。保健食品帶回台灣自用合法，最多 6 個月用量。</p>
+
+  <div class="rx-grid">
+
+    <div class="rx-card usa">
+      <div class="rx-num">01</div>
+      <div class="rx-flag">🇺🇸 美國 · 西雅圖隨處可見</div>
+      <div class="rx-name">Walgreens</div>
+      <div class="rx-type">連鎖藥妝 · 24H部分分店</div>
+      <div class="rx-desc">西雅圖市中心到處有，保養品、保健食品、兒童用品一站購齊，是最方便的採購地。</div>
+      <ul class="rx-list">
+        <li>CeraVe 洗面乳、保濕霜、眼霜全系列</li>
+        <li>La Roche-Posay Toleriane 系列 / Anthelios 防曬</li>
+        <li>Neutrogena 維他命 C 精華、防曬乳</li>
+        <li>Aveeno Baby 系列（安攸適用）</li>
+      </ul>
+    </div>
+
+    <div class="rx-card usa">
+      <div class="rx-num">02</div>
+      <div class="rx-flag">🇺🇸 美國 · 全美最大藥妝</div>
+      <div class="rx-name">CVS Pharmacy</div>
+      <div class="rx-type">連鎖藥妝 · 保健品最齊</div>
+      <div class="rx-desc">自有品牌 CVS Health 保健品超划算，維生素補給品種類全美最齊，是補充保健食品的首選。</div>
+      <ul class="rx-list">
+        <li>魚油 Omega-3（大罐裝，比台灣省一半）</li>
+        <li>維生素 D3 + K2 組合裝</li>
+        <li>Collagen Peptides 膠原蛋白粉</li>
+        <li>褪黑激素 Melatonin（美國合法購買）</li>
+      </ul>
+    </div>
+
+    <div class="rx-card org">
+      <div class="rx-num">03</div>
+      <div class="rx-flag">🌿 美國 · 有機天然</div>
+      <div class="rx-name">Whole Foods Market</div>
+      <div class="rx-type">有機超市 · 天然保養專區</div>
+      <div class="rx-desc">天然有機保養品和保健食品專區，很多台灣沒有的小眾品牌，值得逛逛。</div>
+      <ul class="rx-list">
+        <li>Thayers 金縷梅化妝水（超熱賣）</li>
+        <li>Mario Badescu 面膜、精華系列</li>
+        <li>Dr. Bronner's 有機萬用皂</li>
+        <li>Garden of Life 有機益生菌</li>
+      </ul>
+    </div>
+
+    <div class="rx-card usa">
+      <div class="rx-num">04</div>
+      <div class="rx-flag">🇺🇸 美國 · 一站購足</div>
+      <div class="rx-name">Target</div>
+      <div class="rx-type">大型連鎖 · 彩妝保養齊全</div>
+      <div class="rx-desc">Target 美妝區近年品牌超豐富，買完保養品還可順便補充嬰兒用品，一店全搞定。</div>
+      <ul class="rx-list">
+        <li>The Ordinary 保養品系列（比台灣便宜）</li>
+        <li>e.l.f. Cosmetics 彩妝（超平價高CP）</li>
+        <li>Pixi 化妝水、Go To 保濕系列</li>
+        <li>Honest Company 嬰兒安全清潔</li>
+      </ul>
+    </div>
+
+    <div class="rx-card org">
+      <div class="rx-num">05</div>
+      <div class="rx-flag">💅 美國 · 高端保養</div>
+      <div class="rx-name">Sephora / Ulta Beauty</div>
+      <div class="rx-type">美妝專賣 · 高端品牌</div>
+      <div class="rx-desc">若有想買的特定品牌，美國售價比台灣便宜 20–30%，值得比價入手。</div>
+      <ul class="rx-list">
+        <li>Drunk Elephant 精華、保濕霜</li>
+        <li>Paula's Choice BHA 煥膚液</li>
+        <li>Tatcha 面膜、化妝水</li>
+        <li>Sunday Riley 精華油</li>
+      </ul>
+    </div>
+
+    <div class="rx-card can">
+      <div class="rx-num">06</div>
+      <div class="rx-flag">🍁 加拿大 · 溫哥華</div>
+      <div class="rx-name">Costco（溫哥華）</div>
+      <div class="rx-type">倉儲超市 · 大包最划算</div>
+      <div class="rx-desc">保健食品大包裝最划算！楓糖漿也在這買最便宜。需要會員卡（可請有卡的朋友帶進去或現場辦卡）。</div>
+      <ul class="rx-list">
+        <li>Kirkland 魚油 / 綜合維生素</li>
+        <li>Aveeno 大容量身體乳</li>
+        <li>楓糖漿大桶裝（比超市便宜 20%）</li>
+        <li>Kirkland 有機堅果混合包</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ CHAPTER 5 ═══ -->
+<div class="chapter">
+  <div class="chapter-num">05</div>
+  <div class="chapter-text">
+    <div class="chapter-label">Tips · 旅行提醒</div>
+    <div class="chapter-title">出發前確認<br><em style="font-style:italic;color:rgba(247,244,239,0.35)">Before You Go</em></div>
+  </div>
+</div>
+
+<!-- ═══ TIPS ═══ -->
+<section class="section" id="tips" style="padding-top:72px;">
+
+  <div class="tips-cols">
+    <div class="tip-card-new">
+      <span class="tc-icon">🚗</span>
+      <div class="tc-title">租車跨境加拿大</div>
+      <div class="tc-text">訂車時要告知租車公司需要跨境，大部分主流租車公司（Hertz、Avis、Enterprise）允許但需申報。護照、國際駕照（或台灣駕照 + 英文譯本）、車輛保險文件備好，週日邊境可能排 30–60 分鐘。</div>
+    </div>
+    <div class="tip-card-new">
+      <span class="tc-icon">📱</span>
+      <div class="tc-title">上網方案</div>
+      <div class="tc-text">建議在台灣預先購買「美加兩用 eSIM」，Airalo App 或 Google Fi 都支援美加無縫切換，10 天方案約 NT$500–800，比機場買漫遊方案划算很多。</div>
+    </div>
+    <div class="tip-card-new">
+      <span class="tc-icon">💳</span>
+      <div class="tc-title">信用卡 &amp; 現金</div>
+      <div class="tc-text">美國幾乎全程刷卡，帶「海外無手續費」信用卡（富邦 J 卡、台新 GoGo 卡）最省。加拿大備少量 CAD 現金（$50–100）即可，或在當地 ATM 提領。</div>
+    </div>
+    <div class="tip-card-new">
+      <span class="tc-icon">🌧️</span>
+      <div class="tc-title">五月天氣穿搭</div>
+      <div class="tc-text">西雅圖、溫哥華 5 月氣溫 10–17°C，清晨出門涼，午後日曬強。洋蔥穿搭最實用：短 T + 針織外層 + 防風外套。偶有小雨，隨身折傘備著。安攸帽子、發熱衣各帶一件備用。</div>
+    </div>
+    <div class="tip-card-new">
+      <span class="tc-icon">👶</span>
+      <div class="tc-title">帶安攸出門必備</div>
+      <div class="tc-text">推車（Outlet、動物園必備）、租車加訂兒童安全座椅（或自帶）、隨身零食包、備換衣物 × 2。安攸 2y9m 體力有限，每天排一個親子重點景點就好，不要貪心排太滿。</div>
+    </div>
+    <div class="tip-card-new">
+      <span class="tc-icon">⚖️</span>
+      <div class="tc-title">行李重量</div>
+      <div class="tc-text">出發時行李留一半空間！回程一定爆（Outlet 戰利品 + 保養品 + 伴手禮）。帶一個可折疊的購物袋或空行李袋，5/11 採購日前先估算剩餘空間，必要時郵寄部分行李回台。</div>
+    </div>
+    <div class="tip-card-new">
+      <span class="tc-icon">⛴</span>
+      <div class="tc-title">BC Ferries 提前訂票</div>
+      <div class="tc-text">5/5 維多利亞行程，車位一定要提前在 bcferries.com 預訂！週末船班超搶手，沒預訂很可能上不了船。9 點船班要在 8 點前抵達碼頭。</div>
+    </div>
+    <div class="tip-card-new">
+      <span class="tc-icon">🌐</span>
+      <div class="tc-title">Amazon Spheres 預約</div>
+      <div class="tc-text">5/9 週六是每月第 1 個週六，Spheres 免費開放，需在 seattlespheres.com 提前 15 天預約。現在就去訂！週六 Banana Stand 不開，不用特別繞去。</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">SEA × YVR</div>
+    <div class="footer-meta">
+      2026 年 4 月 30 日 — 5 月 12 日<br>
+      西雅圖 · 維多利亞 · 溫哥華<br>
+      安攸 2y9m 親子旅行
+    </div>
+  </div>
+  <div class="footer-bottom">Have a wonderful trip. Safe travels.</div>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('[data-reveal]');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
+}, { threshold: 0.06 });
+reveals.forEach(el => io.observe(el));
+
+// Active nav
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (scrollY >= s.offsetTop - 120) cur = s.id; });
+  links.forEach(a => { a.classList.toggle('on', a.getAttribute('href') === '#' + cur); });
+}, { passive: true });
+</script>
+</body>
+</html>
